@@ -32,10 +32,13 @@ class MyApp extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           debugShowCheckedModeBanner: false,
-          home: child,
+          initialRoute: "/",
+          routes: {
+            "/": (_) => SplashScreen(),
+            "/onboarding": (_) => OnboardingScreen(),
+          },
         );
       },
-      child: const SplashScreen(),
     );
   }
 }

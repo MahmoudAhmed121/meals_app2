@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:meals_app/core/app_color.dart';
-import 'package:meals_app/features/onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,17 +10,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late AnimationController controller;
+
   @override
   void initState() {
     super.initState();
-
-
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
-      );
+      Navigator.pushReplacementNamed(context, '/onboarding');
     });
+  }
+
+  @override
+  void dispose() {
+    debugPrint('close splash screen');
+    super.dispose();
   }
 
   @override
