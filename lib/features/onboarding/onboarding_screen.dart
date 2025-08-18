@@ -4,6 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals_app/core/app_color.dart';
+import 'package:meals_app/core/app_constant.dart';
+import 'package:meals_app/features/home_layout/home_layout_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -121,7 +124,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   borderRadius: BorderRadius.circular(20.r),
                                 ),
                                 color: Colors.grey,
-
                                 activeSize: Size(20.w, 8.h),
                                 activeShape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20.r),
@@ -139,7 +141,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.setBool(ISFIRSTTIME, true);
+                                  Navigator.pushReplacementNamed(context, homeLayout);
+                                },
                                 child: Text(
                                   'skip'.tr(),
                                   style: TextStyle(
@@ -165,10 +172,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ],
                           )
-                        : CircleAvatar(
-                            backgroundColor: AppColor.backgroundColor,
-                            radius: 30.r,
-                            child: Icon(Icons.arrow_forward),
+                        : GestureDetector(
+                            onTap: () async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setBool(ISFIRSTTIME, true);
+                              Navigator.pushReplacementNamed(context, home);
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: AppColor.backgroundColor,
+                              radius: 30.r,
+
+                              child: Icon(Icons.arrow_forward),
+                            ),
                           ),
                   ],
                 ),

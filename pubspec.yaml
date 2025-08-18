@@ -39,6 +39,8 @@ dependencies:
   carousel_slider: ^5.1.1
   dots_indicator: ^4.0.1
   lottie: ^3.3.1
+  shared_preferences: ^2.5.3
+  flutter_svg: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
     - assets/pngs/
     - assets/translations/
     - assets/animations/
+    - assets/svgs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
