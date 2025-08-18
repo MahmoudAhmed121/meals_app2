@@ -20,10 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/pngs/three.png',
   ];
 
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
+      backgroundColor: AppColor.backgroundColor,
       body: SizedBox(
         width: double.infinity,
         child: Column(
@@ -78,31 +80,35 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      'my_meals'.tr(),
-                      style: TextStyle(
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+              child: Column(
+                children: [
+                  Text(
+                    'my_meals'.tr(),
+                    style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.bold,
                     ),
-                    SizedBox(height: 10.h),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 10.h),
+                ],
               ),
             ),
             Expanded(
               child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 7,
+                padding: EdgeInsets.symmetric(vertical: 16.w),
+                itemCount: 15,
                 itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.all(10.w),
-                    margin: EdgeInsets.symmetric(vertical: 16.w),
-                    width: double.infinity,
-                    color: Colors.red,
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 15.w),
+                    child: ListTile(
+                      leading: Image.asset(
+                        'assets/pngs/meal.png',
+                        width: 70.w,
+                        height: 70.h,
+                      ),
+                      title: Text('Breakfast Smoothie'),
+                      subtitle: Text('350 calories'),
+                    ),
                   );
                 },
               ),
@@ -113,3 +119,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+// Row(
+//                       children: [
+//                         Image.asset(
+//                           'assets/pngs/meal.png',
+//                           width: 70.w,
+//                           height: 70.h,
+//                         ),
+//                         SizedBox(width: 15.w),
+//                         Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Text(
+//                               'Breakfast Smoothie',
+//                               style: TextStyle(
+//                                 color: AppColor.secondaryColor,
+//                                 fontSize: 14.sp,
+//                               ),
+//                             ),
+//                             Text(
+//                               '350 calories',
+//                               style: TextStyle(
+//                                 color: AppColor.primaryColor,
+//                                 fontSize: 14.sp,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ],
+//                     ),

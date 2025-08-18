@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals_app/core/app_color.dart';
 import 'package:meals_app/core/app_constant.dart';
-import 'package:meals_app/features/home_layout/home_layout_screen.dart';
+import 'package:meals_app/features/home/data/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -22,6 +22,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } else {
       context.setLocale(Locale('en'));
     }
+  }
+
+  @override
+  void initState()  {
+    super.initState();
+    getMeals();
+  }
+
+  void getMeals() async {
+    DatabaseHelper databaseHelper = DatabaseHelper.instance;
+    final meals = await databaseHelper.getMeals();
+    debugPrint(meals.toString());
   }
 
   List<String> titles = [
@@ -145,7 +157,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   final SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   await prefs.setBool(ISFIRSTTIME, true);
-                                  Navigator.pushReplacementNamed(context, homeLayout);
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    homeLayout,
+                                  );
                                 },
                                 child: Text(
                                   'skip'.tr(),
@@ -177,12 +192,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               final SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                               await prefs.setBool(ISFIRSTTIME, true);
-                              Navigator.pushReplacementNamed(context, home);
+                              Navigator.pushReplacementNamed(
+                                context,
+                                homeLayout,
+                              );
                             },
                             child: CircleAvatar(
                               backgroundColor: AppColor.backgroundColor,
                               radius: 30.r,
-
                               child: Icon(Icons.arrow_forward),
                             ),
                           ),

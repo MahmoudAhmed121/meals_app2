@@ -23,15 +23,14 @@ class _HomeLayoutState extends State<HomeLayout> {
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColor.backgroundColor,
-        unselectedLabelStyle: TextStyle(color: AppColor.secondaryColor),
-        selectedLabelStyle: TextStyle(color: AppColor.primaryColor),
+        unselectedItemColor: AppColor.secondaryColor,
+        selectedItemColor: AppColor.primaryColor,
         currentIndex: currentIndex,
         onTap: (index) {
           setState(() {
             currentIndex = index;
           });
         },
-
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/svgs/home.svg'),
