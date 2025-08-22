@@ -1,9 +1,13 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals_app/core/app_color.dart';
+import 'package:meals_app/features/home/data/db_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/pngs/two.png',
     'assets/pngs/three.png',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,22 +97,64 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(vertical: 16.w),
-                itemCount: 15,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: 15.w),
-                    child: ListTile(
-                      leading: Image.asset(
-                        'assets/pngs/meal.png',
-                        width: 70.w,
-                        height: 70.h,
-                      ),
-                      title: Text('Breakfast Smoothie'),
-                      subtitle: Text('350 calories'),
-                    ),
-                  );
+              child: FutureBuilder(
+                future: DatabaseHelper.instance.getMeals(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    log('waiting');
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasData) {
+                    log('has data');
+                    if (snapshot.data!.isEmpty) {
+                      return Center(child: Text('no data'));
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 16.w),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 15.w),
+                          child: ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(12.r),
+                              child: SizedBox(
+                                width: 100.w,
+                                height: 100.h,
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: snapshot.data![index].imageUrl,
+                                  placeholder: (context, url) => Container(
+                                    width: 100.w,
+                                    height: 100.h,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(12.r),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                        'assets/pngs/meal.png',
+                                        width: 100.w,
+                                        height: 100.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                ),
+                              ),
+                            ),
+                            title: Text(snapshot.data![index].name),
+                            subtitle: Text(
+                              '${snapshot.data![index].calories.toString()} calories',
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text(snapshot.error.toString()));
+                  }
+
+                  return SizedBox();
                 },
               ),
             ),
@@ -119,33 +164,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// Row(
-//                       children: [
-//                         Image.asset(
-//                           'assets/pngs/meal.png',
-//                           width: 70.w,
-//                           height: 70.h,
-//                         ),
-//                         SizedBox(width: 15.w),
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               'Breakfast Smoothie',
-//                               style: TextStyle(
-//                                 color: AppColor.secondaryColor,
-//                                 fontSize: 14.sp,
-//                               ),
-//                             ),
-//                             Text(
-//                               '350 calories',
-//                               style: TextStyle(
-//                                 color: AppColor.primaryColor,
-//                                 fontSize: 14.sp,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),

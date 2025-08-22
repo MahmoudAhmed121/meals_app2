@@ -6,24 +6,14 @@ class MealModel {
   final String time;
   final double rate;
 
-  MealModel(
-      {required this.name,
-      required this.imageUrl,
-      required this.description,
-      required this.calories,
-      required this.time,
-      required this.rate});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'imageUrl': imageUrl,
-      'description': description,
-      'calories': calories,
-      'time': time,
-      'rate': rate,
-    };
-  }
+  MealModel({
+    required this.name,
+    required this.imageUrl,
+    required this.description,
+    required this.calories,
+    required this.time,
+    required this.rate,
+  });
 
   factory MealModel.fromMap(Map<String, dynamic> map) {
     return MealModel(
@@ -34,5 +24,16 @@ class MealModel {
       time: map['time'],
       rate: map['rate'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'imageUrl': imageUrl,
+      'description': description,
+      'calories': calories,
+      'time': time,
+      'rate': rate,
+    };
   }
 }

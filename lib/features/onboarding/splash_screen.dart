@@ -19,18 +19,18 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(Duration(seconds: 3), () {
-      checkOnboarding();
+      chechOnboarding();
     });
   }
 
-  Future<void> checkOnboarding() async {
+  void chechOnboarding() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final bool isFirstTime = prefs.getBool(ISFIRSTTIME) ?? false;
+    final bool isFirstTime = prefs.getBool('isFirstTime') ?? false;
 
     if (isFirstTime) {
       Navigator.pushReplacementNamed(context, homeLayout);
-    } else {
-      Navigator.pushReplacementNamed(context, onboarding);
+    }else{
+       Navigator.pushReplacementNamed(context, onboarding);
     }
   }
 
