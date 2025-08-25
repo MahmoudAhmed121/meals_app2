@@ -11,10 +11,6 @@ import 'package:meals_app/features/onboarding/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
-
-
-  
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
@@ -23,7 +19,26 @@ void main() async {
       child: MyApp(),
     ),
   );
+  // Person person = Person('mahmoud', 25, 'mahmoud@gmail.com');
+  // Person ali = Person('ali', 20, 'ali@gmail.com');
+  // Person ahmed = Person('ahmed', 22, 'ahmed@gmail.com');
+
+  // person.printMyData();
+  // ali.printMyData();
+  // ahmed.printMyData();
 }
+
+// class Person {
+//   final String name;
+//   final int age;
+//   final String email;
+
+//   Person(this.name, this.age, this.email);
+
+//   void printMyData() {
+//     debugPrint('my name is $name and my age is $age and my email is $email');
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

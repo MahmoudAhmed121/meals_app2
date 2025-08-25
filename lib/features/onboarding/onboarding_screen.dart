@@ -36,6 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   int padgeIndex = 0;
+  
   CarouselSliderController sliderController = CarouselSliderController();
 
   @override
