@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals_app/core/app_color.dart';
 import 'package:meals_app/features/home/data/db_helper.dart';
+import 'package:meals_app/features/home/data/meal_model.dart';
+import 'package:meals_app/features/home/product_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -113,38 +115,44 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.symmetric(vertical: 16.w),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 15.w),
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(12.r),
-                              child: SizedBox(
-                                width: 100.w,
-                                height: 100.h,
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: snapshot.data![index].imageUrl,
-                                  placeholder: (context, url) => Container(
-                                    width: 100.w,
-                                    height: 100.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(12.r),
-                                    ),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset(
-                                        'assets/pngs/meal.png',
-                                        width: 100.w,
-                                        height: 100.h,
-                                        fit: BoxFit.cover,
+                        MealModel meal = snapshot.data![index];
+                        return InkWell(
+                          onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen(mealModel: meal)));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 15.w),
+                            child: ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(12.r),
+                                child: SizedBox(
+                                  width: 100.w,
+                                  height: 100.h,
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl: meal.imageUrl,
+                                    placeholder: (context, url) => Container(
+                                      width: 100.w,
+                                      height: 100.h,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(12.r),
                                       ),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                          'assets/pngs/meal.png',
+                                          width: 100.w,
+                                          height: 100.h,
+                                          fit: BoxFit.cover,
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            title: Text(snapshot.data![index].name),
-                            subtitle: Text(
-                              '${snapshot.data![index].calories.toString()} calories',
+                              title: Text(meal.name),
+                              subtitle: Text(
+                                '${meal.calories.toString()} calories',
+                              ),
                             ),
                           ),
                         );

@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals_app/core/app_constant.dart';
-import 'package:meals_app/features/home/data/db_helper.dart';
-import 'package:meals_app/features/home/data/meal_model.dart';
+import 'package:meals_app/features/home/product_details_screen.dart';
 import 'package:meals_app/features/home_layout/home_layout_screen.dart';
 import 'package:meals_app/features/onboarding/onboarding_screen.dart';
 import 'package:meals_app/features/onboarding/splash_screen.dart';
@@ -60,6 +59,7 @@ class MyApp extends StatelessWidget {
             splash: (_) => SplashScreen(),
             onboarding: (_) => OnboardingScreen(),
             homeLayout: (_) => HomeLayoutScreen(),
+          
           },
         );
       },
